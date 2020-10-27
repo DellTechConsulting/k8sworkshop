@@ -1,0 +1,185 @@
+= Building your first container 
+
+== Learning Outcomes
+After completing the lab, you will be able to:
+
+ . Describe how to create Docker container
+ . Describe how to write a docker file
+ . Run your Spring boot application as a docker container
+ 
+== Get started 
+Before starting the lab, checkout the docker-start branch into a new branch called docker-work.
+   
+   git checkout -b docker-work docker-start
+   
+
+== Creating Dockerfile
+
+. Dockerfile is added to your repo but it does not have any content yet.
++
+. Write the following line :
++ 
+
+[source, java, numbered]
+---------------------------------------------------------------------
+FROM adoptopenjdk:11-jre-openj9
+---------------------------------------------------------------------
+This says "start with the https://hub.docker.com/r/adoptopenjdk/openjdk11-openj9 base-image and use the version 11 "
+
+. Add the following line 
++ 
+[source,java]
+---------------------------------------------------------------------
+ARG JAR_FILE=build/libs/*.jar
+---------------------------------------------------------------------
+The ARG instruction defines a variable with a default value
+
+. Next add the following line 
++  
+
+[source,java]
+---------------------------------------------------------------------
+COPY ${JAR_FILE} app.jar
+---------------------------------------------------------------------
+COPY the project JAR file into the container as "app.jar" that will be executed in the ENTRYPOINT
+
+. Set the starting entry point
++ 
+
+[source,java]
+---------------------------------------------------------------------
+ENTRYPOINT ["java","-jar","/app.jar"]
+---------------------------------------------------------------------
+This is where you configure how the application is executed inside the container
+
+== Deploying to docker locally
+
+. Build and test the application locally and package the jar file.
+
++ 
+
+
++ 
+
+[source,java]
+---------------------------------------------------------------------
+./gradlew clean build
+---------------------------------------------------------------------
+
+. Build a docker image
++
+
+[source,java]
+---------------------------------------------------------------------
+docker build -t pages .
+---------------------------------------------------------------------
+
+
+. Verify the image has been built with proper tag
++
+
+[source,java]
+---------------------------------------------------------------------
+docker image list
+---------------------------------------------------------------------
+
+. Run the image as a container
++
+
+[source,java]
+---------------------------------------------------------------------
+docker run -p 8080:8080 pages
+---------------------------------------------------------------------
+
+In the run command, we have specified that the port 8080 on the container should be mapped to the port 8080 on the Host OS.
+
+Once the application is started, you should be able to access it at http://localhost:8080.
+
+The container runs in the foreground, and pressing CTRL + C will stop it. 
+
+
+== Deploying to docker hub
+
+. Login with your Docker Id
+
++
+
+[source,java]
+---------------------------------------------------------------------
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username:
+Password:
+Login Succeeded
+---------------------------------------------------------------------
+
+. Tag the image using your docker id
++ 
+
+To tag an image, we use the following docker tag command
++ 
+[source,java]
+---------------------------------------------------------------------
+$ docker tag image <docker-username>/<repository>:<tag>
+
+Make sure to replace username with your docker id in the above command.
+
+Example: 
+
+$ docker tag pages my-docker-id/pages:1.0
+
+---------------------------------------------------------------------
+
+
++ 
+Once the tagging is done, you can type docker image ls in the terminal to see the newly tagged image
++ 
+[source,java]
+---------------------------------------------------------------------
+$ docker image ls
+---------------------------------------------------------------------
+
+== Push the image to docker hub
+
+Finally, use the docker push command to push the tagged image to docker hub
+
+[source,java]
+---------------------------------------------------------------------
+$ docker push <docker-username>/pages:<tag>
+---------------------------------------------------------------------
+
+== Pulling the image from docker hub and running it 
+
+Pull and run the image on your machine that we just pushed to docker hub
+
+[source,java]
+---------------------------------------------------------------------
+$ docker run -p 8080:8080 <docker-username>/pages:<tag>
+---------------------------------------------------------------------
+
+== Commit your code to your github repository
+
+
+[source,java]
+---------------------------------------------------------------------
+git add .
+git commit -m "commit message"
+git push origin docker-work:master -f
+
+---------------------------------------------------------------------
+
+== Debugging guide for docker containers
+
+
+. Run `docker container list --all`.  This will show both running and stopped containers.
+. Note the `CONTAINER ID` and/or the `NAMES` of the failed container.  We'll need it next.
+. Run `docker container logs ...`, replacing `...` with the first few characters of the `CONTAINER ID` or the `NAMES` you found above.  This shows the console output from the failed container.  Did this give you clues on how to fix it?
+
+
+==== Stop and delete the stopped container 
+
+.  Run `docker container list` to see running containers.  Note the `CONTAINER ID` and/or the `NAMES` of the running container.
+.  Run `docker container stop ...` replacing `...` with the first few characters of the `CONTAINER ID` or the `NAMES` you found above.  This stops the container.
+.  Run `docker container list` and note the container is now stopped.
+.  Delete the container using `docker container rm ...` replacing `...` with the first few characters of the `CONTAINER ID` or the `NAMES` you found above.  
+
