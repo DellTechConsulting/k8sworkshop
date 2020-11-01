@@ -31,6 +31,7 @@ Once our project is ready, we can use Azure DevOps services for CICD implementat
 ![repo](repo.png) 
 
 Note – Please store the password somewhere as a reference which can be used throughout workshop.
+
 7.	Below is the command which can be used to set remote git URL before pushing into Azure GIT.
 It will be applicable lab 1st onwards.
 
