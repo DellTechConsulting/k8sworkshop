@@ -93,7 +93,7 @@ kubectl get pods
 .. Execute the below command to get credential
 
 ---------------------------------------------------------------------
-az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+az aks get-credentials --resource-group <<myResourceGroup>> --name <<myAKSCluster>>
 ---------------------------------------------------------------------
 
 
@@ -141,6 +141,12 @@ git push -u origin master
 
 
 
-=== Run the following command to start proxying the Kubernetes dashboard on PKS
+=== Note
+
+If you get GIT merge issue due to behind than the remote branch cherry-pick, in that case you can copy somewhere your deployment folder, then create new branch (cherry-pick) from master and add back to your deployment folder in it. then perform below git operations -
+
+git add .
+git commit -m "Commit Message" 
+git push origin cherry-pick:master -f 
 
    
