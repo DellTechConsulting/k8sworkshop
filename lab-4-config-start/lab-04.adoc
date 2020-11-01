@@ -11,6 +11,12 @@ Before starting the lab, pull in the config-start task.
    
    git checkout -b config-work config-start
    
+== Note- if you want to generate quick Development then checkout from below branch and follow the instruction from 1st onwards.
+   
+   git checkout -b config-work config-solution
+
+      
+   
 == Externalize the welcome message
 
 .   Verify the HomeControllerTest.java file to check the change in test. The HomeController.java needs to be changed to pass the test case.
@@ -139,7 +145,7 @@ env:
         key: PAGE_CONTENT
 ---------------------------------------------------------------------
 
-. Run the following commands for minikube and pks to run the application in kubernetes cluster. Follow the previous lab to check the instructions to run the application in minikube and PKS. In the file pages-service.yaml value for type would be NodePort and LoadBalancer for minikube and pks respectively.
+. Run the following commands for minikube and AKS to run the application in kubernetes cluster. Follow the previous lab to check the instructions to run the application in minikube and AKS. In the file pages-service.yaml value for type would be NodePort and LoadBalancer for minikube and AKS respectively.
 
 +
 
@@ -160,8 +166,13 @@ kubectl get deployment pages --namespace pages-<your-name>
 kubectl get cm pages-config-map  --namespace pages-<your-name>
 kubectl get service pages  --namespace pages-<your-name>
 ---------------------------------------------------------------------
-. Identify the url of the pages service from the output above command. Refer to the previous lab for instructions to know the url of the service for both minikube and pks
-. Open the pages url in browser to test the application.
-. Push the code to github repository
--- git push origin config-work:master -f
+. Identify the url of the pages service from the output above command. Refer to the previous lab for instructions to know the url of the service for both minikube and AKS
+. Open the pages url in browser or use curl command to test the application.
+. Push the code to github/azure git repository
+
+   git add .
+   
+   git commit -m "Commit message"
+   
+   git push origin config-work:master -f
 
