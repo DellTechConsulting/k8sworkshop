@@ -22,7 +22,7 @@ We will start by pushing the initial commit to GitHub, complete with the start a
 We can then navigate to GitHub and view the solution tags. This is handy when you get stuck during a lab and need a little help.
 
 
-==Note - Please follow the below step if you want quick development otherwise follow below steps provided.
+== Note - Please follow the below step if you want quick development otherwise follow below steps provided.
 
    Login into SSH account 
 
