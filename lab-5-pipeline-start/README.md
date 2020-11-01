@@ -35,36 +35,11 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 ![codebase](codebase.png) 
 
 8. select a repository.
+
 ![repository](repository.png) 
 
 9. Configuring pipeling.
+
 ![ConfigurePipeline](ConfigurePipeline.png) 
-
-
-5. Provide a Project name and select the Visibility of the project.  Click on Create project.
-Once our project is ready, we can use Azure DevOps services for CICD implementation.
-
-6.	Click on Repos. We will need application code to operate on it, you can generate credential which can be used while performing GIT operation like Push, pull etc.
-![repo](repo.png) 
-
-Note – Please store the password somewhere as a reference which can be used throughout workshop.
-
-7.	Below is the command which can be used to set remote git URL before pushing into Azure GIT.
-It will be applicable lab 1st onwards.
-
-git remote add origin https://RupchandDewangan2@dev.azure.com/RupchandDewangan2/Pages/_git/Pages
-
-8.	If due to any reason, if you want to delete the organization, then follow steps.
-
-Go to project settings at the bottom of the page and search for delete organization 
-
-![settings](settings.png) 
-
-![delete1](delete1.png) 
-
-![delete2](delete2.png) 
-
-Once delete, you won’t be able to use it until re-store.
-![restore](restore.png) 
 
 
