@@ -17,29 +17,5 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![ServiceConnection1](ServiceConnection1.png) 
 
-4. select register type, select Docker hub for public docker image.
-
-![sc3](sc3.png)  
-
-
-5. Create new pipeline and select code base repos and tool which is being used for building the project. In our case, Gradle is being used to build the project. 
-
-![pipeline](pipeline.png) 
-
-6. select a source.
-
-![pipeline2](pipeline2.png) 
-
-7. select code base.
-
-![codebase](codebase.png) 
-
-8. select a repository.
-
-![repository](repository.png) 
-
-9. Configuring pipeling.
-
-![ConfigurePipeline](ConfigurePipeline.png) 
 
 
