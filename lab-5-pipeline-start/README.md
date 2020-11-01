@@ -11,8 +11,6 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 2. Click on Service connections and select new service connection.
 
-![sc1](sc1.png) 
-
 ![ServiceConnection1](ServiceConnection1.png) 
 
 
