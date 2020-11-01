@@ -22,6 +22,59 @@ We will start by pushing the initial commit to GitHub, complete with the start a
 We can then navigate to GitHub and view the solution tags. This is handy when you get stuck during a lab and need a little help.
 
 
+Note - Please follow the below step if you want quick development otherwise follow below steps provided.
+
+   Login into SSH account 
+
+   To download pages, use below command 
+   
+   wget https://dell-edu-lab-store.s3.ap-south-1.amazonaws.com/repository/pages.zip
+   
+   sudo apt install unzip
+   
+   unzip pages.zip
+   
+   git log --graph --decorate --oneline --all
+   
+   based on your github/azure git, set remote URL, below example is for setting Azure git
+   
+   git add remote origin <<Azure remote git URL>>
+   
+   For e.g. https://RupchandDewangan@dev.azure.com/RupchandDewangan/Pages/_git/Pages
+   
+   To see, remote url, run below command
+   
+   git remote -v 
+   
+   git push origin master --tags
+   
+   It may promt for password
+   
+   git checkout -g hellow-world docker-start
+   
+   To check branch, use below command
+   
+	git branch 
+	
+	To build the project
+	
+	./gradlew clean build
+	
+	To run the project
+	
+	./gradlew bootRun
+	
+	After verify, commit your code to your github repository
+	
+	git add .
+	
+	git commit -m "Commit message"
+	
+	git push origin hellow-world:master -f
+	
+   
+   
+
 . Create a build.gradle file with following content
 
 +
