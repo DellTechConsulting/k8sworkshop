@@ -12,6 +12,11 @@ Before starting the lab, checkout the docker-start branch into a new branch call
    
    git checkout -b docker-work docker-start
    
+== Note- if you want to generate quick Docker image then checkout from below branch
+   git checkout -b docker-work docker-solution   
+   
+   Verify dockerFile and follow the instruction given from == Deploying to docker locally onwards
+   
 
 == Creating Dockerfile
 
