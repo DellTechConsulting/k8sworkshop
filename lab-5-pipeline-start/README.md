@@ -13,11 +13,11 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![sc1](sc1.png) 
 
-3. Search Docker Registry and select
+3. Search Docker Registry and select.
 
 ![sc2](sc2.png)
 
-4. select register type, select Docker hub for public docker image
+4. select register type, select Docker hub for public docker image.
 
 ![sc3](sc3.png) 
 
@@ -26,18 +26,18 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![pipeline](pipeline.png) 
 
-6. select a source
+6. select a source.
 
 ![pipeline2](pipeline2.png) 
 
-7. select code base
+7. select code base.
 
 ![codebase](codebase.png) 
 
-8. select a repository
+8. select a repository.
 ![repository](repository.png) 
 
-9. Configuring pipeling
+9. Configuring pipeling.
 ![ConfigurePipeline](ConfigurePipeline.png) 
 
 
