@@ -7,11 +7,38 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
    Login into azure account and navigate to project created by you. Go to project setttings bottom of the page. 
 
-![sc2](sc2.png) 
+![project](project.png) 
 
 2. Click on Service connections and select new service connection.
 
-![sc2](sc2.png) 
+![sc1](sc1.png) 
 
+3. Search Docker Registry and select.
+
+![sc2](sc2.png)
+
+4. select register type, select Docker hub for public docker image.
+
+![sc3](sc3.png) 
+
+5. Create new pipeline and select code base repos and tool which is being used for building the project. In our case, Gradle is being used to build the project. 
+
+![pipeline](pipeline.png) 
+
+6. select a source.
+
+![pipeline2](pipeline2.png) 
+
+7. select code base.
+
+![codebase](codebase.png) 
+
+8. select a repository.
+
+![repository](repository.png) 
+
+9. Configuring pipeling.
+
+![ConfigurePipeline](ConfigurePipeline.png) 
 
 
