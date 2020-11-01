@@ -13,8 +13,6 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![sc1](sc1.png) 
 
-3. Search Docker Registry and select.
-
 ![ServiceConnection1](ServiceConnection1.png) 
 
 
