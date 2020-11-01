@@ -58,9 +58,9 @@ minikube and kubectl must be installed in the local machine vm. To start minikub
 +
 [source,java]
 ---------------------------------------------------------------------
-kubectl -f deployment/pages-namespace.yaml
-kubectl -f deployment/pages-service.yaml
-kubectl -f deployment/pages-deployment.yaml
+kubectl create -f deployment/pages-namespace.yaml
+kubectl create -f deployment/pages-service.yaml
+kubectl create -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------  
 
 . The above commands will create a namespace in the name <your-name> and a deployment, service called pages under the same namespace. Verify the namespace, deployment and service are created by using the following command
@@ -77,14 +77,20 @@ kubectl get service pages --namespace <your-name>
 [source,java]
 ---------------------------------------------------------------------
 kubectl config set-context --current --namespace=<your-name>
+
+kubectl get pods
 ---------------------------------------------------------------------  
 
-.   Execute the command "minikube service pages --namespace <your-name>" and it would open the application in the browser.
 
-.   Instructions for the application to be deployed in Enterprise PKS
-.. pks cli must have been installed already
-.. Receive the pks-username, pks-password, pks-cluster-name and pks-api-name.
-.. Execute the below command to login to the PKS
+
+.   Execute the command "minikube service pages --namespace <your-name>" and it would open the application in the browser or run the curl command if you are using SSH terminal for e.g. curl http://192.168.49.2:32512.
+
+.   Instructions for the application to be deployed in Enterprise AKS
+.. azure cli must have been installed already
+.. Login into https://portal.azure.com/ and create a resource for kubernetes services 
+![AKScluster](AKScluster.png)
+.. Receive the AKS credential
+.. Execute the below command to get credential
 
 +
 [source, java, numbered]
