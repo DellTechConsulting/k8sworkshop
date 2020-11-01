@@ -15,11 +15,11 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 3. Search Docker Registry and select.
 
-![sc2](sc2.png)
+![sc1](sc1.png) 
 
 4. select register type, select Docker hub for public docker image.
 
-![sc3](sc3.png) 
+![sc1](sc1.png)  
 
 
 5. Create new pipeline and select code base repos and tool which is being used for building the project. In our case, Gradle is being used to build the project. 
