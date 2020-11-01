@@ -47,5 +47,5 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 11. Add below lines which helps to build docker images and push into docker hub
 
-![DockerTask](azure-DockerTask.PNG)
+![DockerTask](DockerTask.PNG)
 
