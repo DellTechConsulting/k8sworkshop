@@ -11,7 +11,7 @@ Before starting the lab, pull in the config-start task.
    
    git checkout -b config-work config-start
    
-== Note- if you want to generate quick Development then checkout from below branch and follow the instruction from 1st onwards.
+== Note- if you want quick Development then checkout from below branch and follow the instruction from Build and Test the application section onwards.
    
    git checkout -b config-work config-solution
 
