@@ -47,17 +47,5 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 11. Add below lines which helps to build docker images and push into docker hub
 
-- task: Docker@2
-  displayName: Login to Docker Hub
-  inputs:
-    command: login
-    containerRegistry: <<dockerRegistryServiceConnection>>
-- task: Docker@2
-  displayName: Build and Push
-  inputs:
-    command: buildAndPush
-    repository: <<rupchand1006>>/<<pages>>
-    tags: |
-      <<pipeline2>>
-
+![DockerTask](azure-DockerTask.PNG)
 
