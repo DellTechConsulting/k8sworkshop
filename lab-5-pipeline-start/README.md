@@ -41,4 +41,6 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![ConfigurePipeline](ConfigurePipeline.png) 
 
+10.
+
 
