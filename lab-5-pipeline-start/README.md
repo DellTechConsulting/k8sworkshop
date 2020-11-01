@@ -11,11 +11,11 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 2. Click on Service connections and select new service connection.
 
- ![sc1](sc1.png) 
+![sc1](sc1.png) 
 
 3. Search Docker Registry and select
 
- ![sc2](sc2.png)
+![sc2](sc2.png)
 
 4. select register type, select Docker hub for public docker image
 
