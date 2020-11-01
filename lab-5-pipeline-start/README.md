@@ -7,7 +7,7 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
    Login into azure account and navigate to project created by you. Go to project setttings bottom of the page. 
 
-![project](project.png) 
+![sc2](sc2.png) 
 
 2. Click on Service connections and select new service connection.
 
