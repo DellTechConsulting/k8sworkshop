@@ -49,6 +49,6 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![DockerTask](DockerTask.PNG)
 
-![YAML](azure-pipelines.yml)
+![SEE COMPLETE YAML](azure-pipelines.yml)
 
 
