@@ -49,3 +49,57 @@ Build pipeline for Kubernetes usually contains the steps that will fetch the cod
 
 ![DockerTask](DockerTask.PNG)
 
+Complete YAML from Gradle buidl to Dockerized and deploying into AKS
+
+# Gradle
+# Build your Java project and run tests with Gradle using a Gradle wrapper script.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Gradle@2
+  inputs:
+    workingDirectory: ''
+    gradleWrapperFile: 'gradlew'
+    gradleOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.xml'
+    tasks: 'build'
+- task: Docker@2
+  displayName: Login to Docker Hub
+  inputs:
+    command: login
+    containerRegistry: dockerRegistryServiceConnection
+- task: Docker@2
+  displayName: Build and Push
+  inputs:
+    command: buildAndPush
+    repository: rupchand1006/pages
+    tags: |
+      config
+- task: Kubernetes@1
+  displayName: 'kubectl apply'
+  inputs:
+    connectionType: 'Azure Resource Manager'
+    azureSubscriptionEndpoint: 'MSDN Platforms Subscription (79d8ffb4-b8c9-405e-acf9-aec0ebdc6f1e)'
+    azureResourceGroup: myResourceGroup
+    kubernetesCluster: myAKSCluster
+    namespace: rupchand
+    command: apply
+    arguments: '-f $(Build.SourcesDirectory)/deployment/pages-namespace.yaml -f $(Build.SourcesDirectory)/deployment/pages-service.yaml -f $(Build.SourcesDirectory)/deployment/pages-config.yaml -f $(Build.SourcesDirectory)/deployment/pages-deployment.yaml'
+    containerRegistryType: 'Container Registry'
+    dockerRegistryEndpoint: dockerRegistryServiceConnection
+    forceUpdate: false
+  condition: succeededOrFailed()
+              
+
+
