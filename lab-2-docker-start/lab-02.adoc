@@ -67,6 +67,10 @@ This is where you configure how the application is executed inside the container
 ---------------------------------------------------------------------
 
 . Build a docker image
+. Check if your user has permission to run docker without sudo. "docker run hello-world" If you couldnt then try following commands and once login and logout out of shell.
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+
 +
 
 [source,java]
@@ -99,7 +103,6 @@ The container runs in the foreground, and pressing CTRL + C will stop it.
 
 
 == Deploying to docker hub
-
 . Login with your Docker Id
 
 +
