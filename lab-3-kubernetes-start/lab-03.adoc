@@ -93,10 +93,12 @@ pks login -a pks-api-name   -u pks-username  -k -p pks-password
 ---------------------------------------------------------------------
 
 . We need to create PageApplication.java and HelloController.java based on test classes
+. Create a cluster in portal.azure.com for the resource group that you created the VM.
+. And change type of service to LoadBalancer in deployment/pages-service.yml.
 
 [source, java, numbered]
 ---------------------------------------------------------------------
-pks get-credentials pks-cluster-name
+az aks get-credentials --resource-group <<rg>> --name <<clustername>>
 ---------------------------------------------------------------------
 
 Now we are good to execute our commands in the PKS cluster
