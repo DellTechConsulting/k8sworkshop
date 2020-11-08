@@ -10,7 +10,7 @@ After completing the lab, you will be able to:
 == Get started 
 Before starting the lab, pull in the kubernetes-start task.
    
-   git cherry-pick kubernetes-start
+   git checkout -b kwork kubernetes-solution 
    
 As part of this checkout you will get three yaml files - pages-namespace.yaml, pages-services.yaml, pages-deployment.yaml
 
@@ -116,6 +116,8 @@ kubectl -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------
 kubectl get deployment pages --namespace <your-name>
 kubectl get service pages --namespace <your-name>
+// or
+minikube service --url pages -n <your-name>
 ---------------------------------------------------------------------
 
 . Below command would set your default namespace to the new namespace and we don't need to suffix --namespace in all commands
@@ -137,7 +139,7 @@ kubectl config set-context --current --namespace=<your-name>
 ---------------------------------------------------------------------
 git add .
 git commit -m "commit message"
-git push -u origin master 
+git push origin kwork:master -f
 ---------------------------------------------------------------------
 
 == Accessing the Kubernetes Dashboard on PKS
