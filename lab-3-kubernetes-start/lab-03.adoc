@@ -10,29 +10,13 @@ After completing the lab, you will be able to:
 == Get started 
 Before starting the lab, pull in the kubernetes-start task.
    
-   git cherry-pick kubernetes-start
+   git checkout -b 'lab3' kubernetes-solution
    
 As part of this checkout you will get three yaml files - pages-namespace.yaml, pages-services.yaml, pages-deployment.yaml
 
-. Fill in the pages-namespace.yaml as below 
+. Update namespace to your name in pages-namespace.yaml, pages-service.yaml, pages-deployment.yaml.
 
 +
-[source,java]
----------------------------------------------------------------------
-Assign your <first-name> to the name section
----------------------------------------------------------------------
-
-.   Fill in the pages-services.yaml as below
-
-
-+
-[source,java]
----------------------------------------------------------------------
-Assign 8080 to targetPort and port
-Assign TCP to protocol
-Assign the value pages to app, servicefor and name
-In metadata section add namespace: <your-name>
----------------------------------------------------------------------
 
 .   Fill in the pages-deployment.yaml
 +
@@ -42,15 +26,22 @@ Assign the value pages to app, servicefor and name
 Assign proper values for <docker_username>/pages:kube for value of image.
 In metadata section add namespace: <your-name>
 ---------------------------------------------------------------------
-
-In all the above section replace <your-name> with your own first name. 
+. Change type in pages-service.yaml to NodePort
+. Build the application and build a docker image
+   ./gradlew clean build
+   sudo docker build -t pages .
+   sudo docker tag pages <docker_username>/<repo-name>:kube 
+   sudo docker push <docker_username>/<repo-name>:kube 
 
 Instructions for the application to be deployed in minikube for local testing
 
-minikube and kubectl must be installed in the local machine vm. To start minikube "minikube start" or "minikube start --driver=virtualbox/docker" could be executed in the terminal.
-
-
-. Change type in pages-service.yaml to NodePort
+. minikube and kubectl must be installed in the local machine vm. To start minikube "minikube start" or "minikube start --driver=virtualbox/docker" could be executed in the terminal.
+   chmod +x ./kubectl
+   sudo mv ./kubectl /usr/local/bin/kubectl
+   kubectl version --client
+   sudo usermod -aG docker $USER && newgrp docker
+. Try starting minikube
+   minikube start
 
 . Run the following commands in terminal to run the application in minikube
 
@@ -81,27 +72,27 @@ kubectl config set-context --current --namespace=<your-name>
 
 .   Execute the command "minikube service pages --namespace <your-name>" and it would open the application in the browser.
 
-.   Instructions for the application to be deployed in Enterprise PKS
-.. pks cli must have been installed already
-.. Receive the pks-username, pks-password, pks-cluster-name and pks-api-name.
+.   Instructions for the application to be deployed in Enterprise AKS
+.. azure cli must have been installed already
 .. Execute the below command to login to the PKS
+   $ az login
 
 +
 [source, java, numbered]
 ---------------------------------------------------------------------
-pks login -a pks-api-name   -u pks-username  -k -p pks-password 
+$ az aks get-credentials --resource-group <<ResourceGroup-Name>> --name <<AKSCluster-Name>>
 ---------------------------------------------------------------------
 
-. We need to create PageApplication.java and HelloController.java based on test classes
+. Run below command to check if kubectl is pointing to AKS cluster.
 
 [source, java, numbered]
 ---------------------------------------------------------------------
-pks get-credentials pks-cluster-name
+$ kubectl config get-contexts
 ---------------------------------------------------------------------
+. change the type to LoadBalancer in pages-service.yaml
+Now we are good to execute our commands in the AKS cluster
 
-Now we are good to execute our commands in the PKS cluster
-
-. Execute the below commands to create namespace, deployment and service in pks cluster
+. Execute the below commands to create namespace, deployment and service in aks cluster
 +
 [source, java, numbered]
 ---------------------------------------------------------------------
@@ -110,7 +101,7 @@ kubectl -f deployment/pages-service.yaml
 kubectl -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------
 
-. Verify the namespace, deployment and service are created by using the following command in the pks cluster
+. Verify the namespace, deployment and service are created by using the following command in the aks cluster
 + 
 [source,java]
 ---------------------------------------------------------------------
@@ -129,6 +120,8 @@ kubectl config set-context --current --namespace=<your-name>
 
 . Identify the external ip of the pages service from the output of "kubectl get service pages" command.
 
+. Take the external IP address and hit <External-IP>:8080in browser to access application
+
 . Commit your code to your github repository
 
 +
@@ -139,12 +132,3 @@ git add .
 git commit -m "commit message"
 git push -u origin master 
 ---------------------------------------------------------------------
-
-== Accessing the Kubernetes Dashboard on PKS
-
-=== Run the following command to start proxying the Kubernetes dashboard on PKS
-
-    . kubectl proxy &
-    . Wait for the output - Starting to serve on 127.0.0.1:8001
-    . Open the dashboard at  http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
-    . You need to provide the config file located under $home/.kube directory. Click on the three dots after 'choose kubeconfig file' .To see the file under the .kube folder , right click and select show hidden files.
