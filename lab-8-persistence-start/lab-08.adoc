@@ -11,11 +11,159 @@ After completing the lab, you will be able to:
  
 Before starting the lab, pull in the persistence-start task.
    
-   git checkout persistence-start -b persistence-work
+   git checkout -b persistence-work
 
 As part of the persistence-start checkout you would get one test class for which you need to add the necessary code to make the test cases pass.
    
 == Follow the below instructions to reach to the solution.
+
+.   Create new Java class  Page.java under org.dell.kube.pages
+ 
+
++
+[source,java]
+---------------------------------------------------------------------
+package org.dell.kube.pages;
+
+public class Page {
+
+    private Long id;
+    private String businessName;
+    private Long categoryId;
+    private String address;
+    private String contactNumber;
+
+    public Page(){}
+
+    public Page(String businessName, String address, long categoryId, String contactNumber) {
+        this.businessName = businessName;
+        this.address = address;
+        this.categoryId = categoryId;
+        this.contactNumber = contactNumber;
+    }
+
+    public Page(long id, String businessName, String address, long categoryId, String contactNumber) {
+        this.id = id;
+        this.businessName = businessName;
+        this.address = address;
+        this.categoryId = categoryId;
+        this.contactNumber = contactNumber;
+    }
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public Long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+}
+---------------------------------------------------------------------
+
+.   Create new Java class  IPageRepository.java under org.dell.kube.pages
+
+
++
+[source, java, numbered]
+---------------------------------------------------------------------
+package org.dell.kube.pages;
+
+import java.util.List;
+
+public interface IPageRepository {
+    public Page create(Page page);
+    public Page read(long id);
+    public List<Page> list();
+    public Page update(Page page, long id);
+    public void delete(long id);
+}
+---------------------------------------------------------------------
+
+. Create a PageController.java in src folder. Create an Instance of IPageRepository and initialize  it with a constructor injection
++ 
+[source,java]
+---------------------------------------------------------------------
+package org.dell.kube.pages;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/pages")
+public class PageController {
+
+    private IPageRepository pageRepository;
+    public PageController(IPageRepository pageRepository)
+    {
+        this.pageRepository = pageRepository;
+    }
+    @PostMapping
+    public ResponseEntity<Page> create(@RequestBody Page page) {
+        Page newPage= pageRepository.create(page);
+        return new ResponseEntity<Page>(newPage, HttpStatus.CREATED);
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<Page> read(@PathVariable long id) {
+        Page page = pageRepository.read(id);
+        if(page!=null)
+            return new ResponseEntity<Page>(page,HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+    @GetMapping
+    public ResponseEntity<List<Page>> list() {
+        List<Page> pages= pageRepository.list();
+        return new ResponseEntity<List<Page>>(pages,HttpStatus.OK);
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<Page> update(@RequestBody Page page, @PathVariable long id) {
+        Page updatedPage= pageRepository.update(page,id);
+        if(updatedPage!=null)
+            return new ResponseEntity<Page>(updatedPage,HttpStatus.OK);
+        else
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        pageRepository.delete(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+}
+---------------------------------------------------------------------
 
 .   Here we will use JDBC for data persistence. Add jpa and mysql connector dependencies in build.gradle. It will fetch the Spring JDBC library.
  
@@ -35,7 +183,9 @@ implementation 'mysql:mysql-connector-java:8.0.12'
 ---------------------------------------------------------------------
 test.environment([
 		"PAGE_CONTENT": "YellowPages",
-		"SPRING_DATASOURCE_URL": "jdbc:mysql://localhost:3306/pages?createDatabaseIfNotExist=true&useSSL=false&user=root",
+		"SPRING_DATASOURCE_URL": "jdbc:mysql://localhost:3306/pages?createDatabaseIfNotExist=true&useSSL=false",
+    "SPRING_DATASOURCE_USERNAME": "root",
+    "SPRING_DATASOURCE_PASSWORD": "test123",
 ])
 ---------------------------------------------------------------------
 
@@ -57,7 +207,7 @@ testImplementation "junit:junit:4.12"
 ---------------------------------------------------------------------
 spring.datasource.url=jdbc:mysql://localhost:3306/pages?createDatabaseIfNotExist=true&useSSL=false
 spring.datasource.username=root
-spring.datasource.password=
+spring.datasource.password=test123
 ---------------------------------------------------------------------
 
 . Add new class MySqlPageRepository.java which implements IPageRepository.
@@ -169,7 +319,7 @@ public class MySqlPageRepository implements IPageRepository {
 ---------------------------------------------------------------------
 
 
-. Make change in PageApplication class to return MySqlPageRepository instance instead of InMemoryPageRepository instance. This method would also take a DataSource instance as argument.
+. Make change in PageApplication class to return MySqlPageRepository instance. This method would also take a DataSource instance as argument.
 
 +
 
@@ -217,18 +367,20 @@ spec:
       storage: 1Gi
 ---------------------------------------------------------------------
 
-. Create a new file called mysql-secret.yaml in deployment folder
+. Create a new file called mysql-secret.yaml in deployment folder or create using the command below.
+
+    kubectl create secret generic mysql-secret --from-literal=mysql-pass='test123' -n <your-name>
 +
 
 [source,java]
 ---------------------------------------------------------------------
 apiVersion: v1
 data:
-  mysql-pass: cGFzc3dvcmQ=
+  mysql-pass: test123
 kind: Secret
 metadata:
   name: mysql-secret
-   namespace: <your-name>
+  namespace: <your-name>
 ---------------------------------------------------------------------
 
 . Create a new file called mysql-deployment.yaml in deployment folder
@@ -240,7 +392,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
-   namespace: <your-name>
+  namespace: <your-name>
 spec:
   replicas: 1
   selector:
@@ -249,6 +401,7 @@ spec:
   strategy:
     type: Recreate
   template:
+    namespace : <your-name>
     metadata:
       labels:
         app: mysql
@@ -278,7 +431,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
-   namespace: <your-name>
+  namespace: <your-name>
 spec:
   ports:
     - port: 3306
@@ -288,7 +441,7 @@ spec:
 ---------------------------------------------------------------------
 
 . Replace all the <your-name> with your actual first name.
-. Ensure that a MySQL instance with no password for user root in local machine is running
+. Ensure that a MySQL instance with password test123 for user root in local machine is running
 . Build, Test and Run the application locally
 +
 
@@ -304,8 +457,9 @@ spec:
 
 [source,java]
 ---------------------------------------------------------------------
-spring.datasource.url=jdbc:mysql://mysql/pages?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false&user=root
-spring.datasource.password=password
+spring.datasource.url=jdbc:mysql://mysql/pages?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=test123
 ---------------------------------------------------------------------
 
 
@@ -314,8 +468,9 @@ spring.datasource.password=password
 
 [source,java]
 ---------------------------------------------------------------------
+"SPRING_DATASOURCE_URL": "jdbc:mysql://localhost:3306/pages?createDatabaseIfNotExist=true&useSSL=false",
 "SPRING_DATASOURCE_USERNAME": "root",
-"SPRING_DATASOURCE_PASSWORD": "root",
+"SPRING_DATASOURCE_PASSWORD": "test123",
 ---------------------------------------------------------------------
 
 
@@ -332,16 +487,8 @@ spring.datasource.password=password
 
 
 . Make change in the pages-deployment.yaml and pipeline.yaml to update the tag as persist
-. Add the below content in pipeline.yaml just above the line "- name: Build with Gradle"
-
-+
-
-[source,java]
----------------------------------------------------------------------
-- name: Start Ubuntu MySQL
-  run: sudo systemctl start mysql.service
----------------------------------------------------------------------
-. Change the pipeline.yaml to use the new mysql related yaml files. The last section should look like below
+. build the docker image and tag it as persist ad push it to your docker hub repo.
+. Point the kubectl context to minikube and run the following commands.
 [source,java]
 ---------------------------------------------------------------------
 kubectl apply -f deployment/pages-namespace.yaml
@@ -353,8 +500,18 @@ kubectl apply -f deployment/pages-service.yaml
 kubectl delete -f deployment/pages-deployment.yaml
 kubectl apply -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------
+. Test the application in minikube and see if the data is getting populated in mysql db.
+. Point the kubectl context to aks cluster and apply the yamls. Make sure pages service on AKS is using LoadBalancer.
+[source,java]
+----------------------------------------------------------------
+kubectl apply -f deployment/mysql-pv.yaml
+kubectl apply -f deployment/mysql-secret.yaml
+kubectl apply -f deployment/mysql-deployment.yaml
+kubectl delete -f deployment/pages-deployment.yaml
+kubectl apply -f deployment/pages-deployment.yaml
+----------------------------------------------------------------
 
-. Finally push the code to the github so that github actions will start the pipeline and the application would be deployed in pks cluster
+. Finally push the code to the github 
 
 . Use the below command to set default namespace
 
