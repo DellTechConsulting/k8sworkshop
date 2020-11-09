@@ -10,46 +10,24 @@ After completing the lab, you will be able to:
 == Get started 
 Before starting the lab, checkout the docker-start branch into a new branch called docker-work.
    
-   git checkout -b docker-work docker-start
+   git checkout -b docker-work docker-solution
    
 
-== Creating Dockerfile
+== Verify the  Dockerfile
 
-. Dockerfile is added to your repo but it does not have any content yet.
-+
-. Write the following line :
+. The file has below contents
 + 
 
 [source, java, numbered]
 ---------------------------------------------------------------------
 FROM adoptopenjdk:11-jre-openj9
----------------------------------------------------------------------
-This says "start with the https://hub.docker.com/r/adoptopenjdk/openjdk11-openj9 base-image and use the version 11 "
-
-. Add the following line 
-+ 
-[source,java]
----------------------------------------------------------------------
 ARG JAR_FILE=build/libs/*.jar
----------------------------------------------------------------------
-The ARG instruction defines a variable with a default value
-
-. Next add the following line 
-+  
-
-[source,java]
----------------------------------------------------------------------
 COPY ${JAR_FILE} app.jar
----------------------------------------------------------------------
-COPY the project JAR file into the container as "app.jar" that will be executed in the ENTRYPOINT
-
-. Set the starting entry point
-+ 
-
-[source,java]
----------------------------------------------------------------------
 ENTRYPOINT ["java","-jar","/app.jar"]
 ---------------------------------------------------------------------
+This says "start with the https://hub.docker.com/r/adoptopenjdk/openjdk11-openj9 base-image and use the version 11 "
+The ARG instruction defines a variable with a default value
+COPY the project JAR file into the container as "app.jar" that will be executed in the ENTRYPOINT
 This is where you configure how the application is executed inside the container
 
 == Deploying to docker locally
@@ -155,6 +133,12 @@ Pull and run the image on your machine that we just pushed to docker hub
 [source,java]
 ---------------------------------------------------------------------
 $ docker run -p 8080:8080 <docker-username>/pages:<tag>
+---------------------------------------------------------------------
+
+Access your application
+[source,java]
+---------------------------------------------------------------------
+Browse to http://localhost:9090
 ---------------------------------------------------------------------
 
 == Commit your code to your github repository

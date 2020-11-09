@@ -11,46 +11,17 @@ The  https://dell-edu-lab-store.s3.ap-south-1.amazonaws.com/repository/pages.zip
 
    git log --graph --decorate --oneline --all
 
+. open terminal and run:
+    sudo apt install unzip
+	unzip pages.zip
    
 Create a repository called pages in your GitHub account. Add this repository as a remote called origin of your local repository.Keep everything default, while creating the repository, don't change anything other than default. You will push all of your work to this repository during the next few labs.
+    git remote add origin <<repo-url>>
 
 We will start by pushing the initial commit to GitHub, complete with the start and solutions tags.
 
   git push origin master --tags
 
-   
-We can then navigate to GitHub and view the solution tags. This is handy when you get stuck during a lab and need a little help.
-
-
-. Create a build.gradle file with following content
-
-+
-[source,java]
----------------------------------------------------------------------
-plugins {
-	id 'org.springframework.boot' version '2.3.1.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id 'java'
-}
-
-group = 'com.example'
-sourceCompatibility = '11'
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-}
-
-test {
-	useJUnitPlatform()
-}
----------------------------------------------------------------------
 
 .   Create the gradle ecosystem by using the following commands
 
@@ -97,153 +68,9 @@ out/
 ### VS Code ###
 .vscode/
 ---------------------------------------------------------------------
-
-. Open the project in Intellij Idea, select the import gradle project option in bottom right corner and set project SDK to JDK 11
-. Create two folders src/main/java and src/test/java under project root directory. Mark them as sources root and test root respectively.
-. Create two packages org.dell.kube.pages and org.dell.kube.pagesapi under src/test/java
-. Create a Test class called PagesApplicationTests.java under package org.dell.kube.pages with below content
-
-+
-[source,java]
----------------------------------------------------------------------
-package org.dell.kube.pages;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
-class PagesApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
-
-}
----------------------------------------------------------------------  
-
-. Create a Test class called HomeControllerTests.java  under package org.dell.kube.pages with below content
-
-+
-[source,java]
----------------------------------------------------------------------
-package org.dell.kube.pages;
-
-import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-public class HomeControllerTest {
-    private final String message = "YellowPages";
-
-    @Test
-    public void itSaysYellowPagesHello() throws Exception {
-        HomeController controller = new HomeController();
-
-        assertThat(controller.getPage()).contains(message);
-    }
-
-
-}
----------------------------------------------------------------------  
-
-. Create a Test class called HomeApiTest under the package org.dell.kube.pagesapi with below content
-+
-[source,java]
----------------------------------------------------------------------
-package org.dell.kube.pagesapi;
-
-import org.dell.kube.pages.PageApplication;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-
-@SpringBootTest(classes = PageApplication.class, webEnvironment = RANDOM_PORT)
-public class HomeApiTest {
-
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
-    }
-
-    @Test
-    public void readTest() {
-        String body = this.restTemplate.getForObject("/", String.class);
-        assertThat(body).contains("YellowPages");
-    }
-
-    @Test
-    public void healthTest(){
-        String body = this.restTemplate.getForObject("/actuator/health", String.class);
-        assertThat(body).contains("UP");
-    }
-}
----------------------------------------------------------------------  
-
-.   Create a settings.gradle file in the root project directory with below content
-
-+
-[source,java]
----------------------------------------------------------------------
-rootProject.name = 'pages'
----------------------------------------------------------------------
-
-
-
-. We need to create PageApplication.java and HelloController.java based on test classes
-. Create a package org.dell.kube.pages under src/main/java
-. Create class PageApplication.java in the package with below content
-
- 
-+
-[source, java, numbered]
----------------------------------------------------------------------
-package org.dell.kube.pages;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-
-@SpringBootApplication
-public class PageApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(PageApplication.class, args);
-	}
-}
----------------------------------------------------------------------
-
-. Create HomeController.java with below content in same package
-
-+
-[source, java, numbered]
----------------------------------------------------------------------
-package org.dell.kube.pages;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-@RequestMapping("/")
-public class HomeController {
-
-
-    @GetMapping
-    public String getPage(){
-        return "Hello from page : YellowPages";
-    }
-
-
-}
----------------------------------------------------------------------
+. Git commit and push .gitignore to master
+. Checkout the hello-solution tag. This add all the required test classes and main classes to your folder.
+    git checkout -b '<branch-name>' hello-solution
 
 . Add actuator dependency to the list of dependencies in build.gradle inside the dependencies closure
 + 
@@ -287,14 +114,6 @@ management.endpoint.health.show-details=always
 Browse to http://localhost:8080
 ---------------------------------------------------------------------
 
-
-+
-
-[source,java]
----------------------------------------------------------------------
-Browse to http://localhost:8080
----------------------------------------------------------------------
-
 . Commit your code to your github repository
 
 +
@@ -303,5 +122,5 @@ Browse to http://localhost:8080
 ---------------------------------------------------------------------
 git add .
 git commit -m "commit message"
-git push -u origin master 
+git push origin <branch-name>:master -f
 ---------------------------------------------------------------------

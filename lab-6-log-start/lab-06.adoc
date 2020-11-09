@@ -11,7 +11,7 @@ After completing the lab, you will be able to:
  
 Before starting the lab, pull in the log-start task.
    
-   git cherry-pick log-start
+   git checkout -b 'logging' 'log-solution'
 
    
 == Creating and Updating the Volume
@@ -156,7 +156,7 @@ spec:
         readinessProbe:
           tcpSocket:
            port: 8080
-          initialDelaySeconds: 150
+          initialDelaySeconds: 100
           periodSeconds: 5
           successThreshold: 2
         livenessProbe:
@@ -197,7 +197,7 @@ kubectl apply -f deployment/pages-deployment.yaml
 
 . Change the value of tags in pipeline.yaml to logging
 . Push the code to github repository to start the pipeline
-. In PKS cluster the application ready time would be delayed. The application would be ready after 150 seconds as the readiness probe would start after 150 seconds
+. In AKS cluster the application ready time would be delayed. The application would be ready after 150 seconds as the readiness probe would start after 150 seconds
 . Keep on checking the status of the pod which is part of the pages deployment
 . After sometime though the status might be Running, it might be showing Not Ready as it needs 150 seconds to be in ready status.
 
