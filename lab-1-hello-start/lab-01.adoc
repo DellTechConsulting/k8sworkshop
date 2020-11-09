@@ -11,13 +11,18 @@ The  https://dell-edu-lab-store.s3.ap-south-1.amazonaws.com/repository/pages.zip
 
    git log --graph --decorate --oneline --all
 
-. open terminal and run:
+. Open terminal and run
++
+[source,java]
+---------------------------------------------------------------------
     sudo apt install unzip
 	unzip pages.zip
+---------------------------------------------------------------------
    
 Create a repository called pages in your GitHub account. Add this repository as a remote called origin of your local repository.Keep everything default, while creating the repository, don't change anything other than default. You will push all of your work to this repository during the next few labs.
+---------------------------------------------------------------------
     git remote add origin <<repo-url>>
-
+---------------------------------------------------------------------
 We will start by pushing the initial commit to GitHub, complete with the start and solutions tags.
 
   git push origin master --tags
@@ -70,6 +75,7 @@ out/
 ---------------------------------------------------------------------
 . Git commit and push .gitignore to master
 . Checkout the hello-solution tag. This add all the required test classes and main classes to your folder.
+
     git checkout -b '<branch-name>' hello-solution
 
 . Add actuator dependency to the list of dependencies in build.gradle inside the dependencies closure

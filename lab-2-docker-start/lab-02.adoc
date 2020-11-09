@@ -132,7 +132,7 @@ Pull and run the image on your machine that we just pushed to docker hub
 
 [source,java]
 ---------------------------------------------------------------------
-$ docker run -p 8080:8080 <docker-username>/pages:<tag>
+$ docker run -p 9090:8080 <docker-username>/pages:<tag>
 ---------------------------------------------------------------------
 
 Access your application
