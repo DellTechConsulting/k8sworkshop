@@ -10,7 +10,7 @@ After completing the lab, you will be able to:
 == Get started 
 Before starting the lab, pull in the kubernetes-start task.
    
-   git checkout -b kwork kubernetes-solution 
+   git checkout -b k8sstart kubernetes-solution
    
 As part of this checkout you will get three yaml files - pages-namespace.yaml, pages-services.yaml, pages-deployment.yaml
 
@@ -141,7 +141,7 @@ kubectl config set-context --current --namespace=<your-name>
 ---------------------------------------------------------------------
 git add .
 git commit -m "commit message"
-git push origin <<new branch>>:master -f
+git push origin k8sstart:master -f
 ---------------------------------------------------------------------
 
 == Accessing the Kubernetes Dashboard on PKS
