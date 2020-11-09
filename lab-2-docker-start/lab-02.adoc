@@ -66,6 +66,15 @@ This is where you configure how the application is executed inside the container
 ./gradlew clean build
 ---------------------------------------------------------------------
 
+. Run the docker Engine 
++
+
+[source,java]
+---------------------------------------------------------------------
+$ sudo systemctl start docker
+$ sudo usermod -aG docker $USER && newgrp docker
+---------------------------------------------------------------------
+
 . Build a docker image
 +
 

@@ -9,13 +9,19 @@ After completing the lab, you will be able to:
  
 Before starting the lab, pull in the config-start task.
    
+   cd ~/Downloads/pages
    git checkout -b config-work config-start
    
 == Externalize the welcome message
 
 .   Verify the HomeControllerTest.java file to check the change in test. The HomeController.java needs to be changed to pass the test case.
+    
+   cat src/test/java/org/dell/kube/pages/HomeControllerTest.java
+    
 .   In HomeController.java create a String variable pageContent and intialize it through constructor
     using @Value annotation. Use the same variable in getPage() method to return welcome message.
+    
+   vi src/main/java/org/dell/kube/pages/HomeController.java
 
 +
 [source,java]
@@ -49,6 +55,7 @@ public class HomeController {
 .   Initialize the variable PAGE_CONTENT in build.gradle for bootRun and test closures by adding below 
     statements
 
+   vi build.gradle
 
 +
 [source, java, numbered]
@@ -73,7 +80,10 @@ Next let us build and run our container
 ---------------------------------------------------------------------
 ./gradlew clean build
 ./gradlew bootRun
+
+curl localhost:8080
 ---------------------------------------------------------------------
+
 
 . Build your container
 + 
@@ -91,12 +101,14 @@ docker run --env PAGE_CONTENT="Green-Pages coming from Yellow-world!" -p 8080:80
 ---------------------------------------------------------------------
 
 
-. Access your application
+. Access your application ( or ) open other terminal and curl
 +
 
 [source,java]
 ---------------------------------------------------------------------
 Browse to http://localhost:8080
+// or
+curl localhost:8080 
 ---------------------------------------------------------------------
 
 . Push the image to docker
@@ -111,6 +123,8 @@ docker push <docker_username>/pages:config
 Running the container in Kubernetes
 
 . Create a new file *pages-config.yaml in deployment folder to initialize the variable in kubernetes. Use below content
+
+   vi deployment/pages-config.yaml
 
 +
 
@@ -139,16 +153,18 @@ env:
         key: PAGE_CONTENT
 ---------------------------------------------------------------------
 
-. Run the following commands for minikube and pks to run the application in kubernetes cluster. Follow the previous lab to check the instructions to run the application in minikube and PKS. In the file pages-service.yaml value for type would be NodePort and LoadBalancer for minikube and pks respectively.
+. And modify all files in deployment folder to have the required variables from your cluster.
+. Run the following commands for minikube and Aks to run the application in kubernetes cluster. Follow the previous lab to check the instructions to run the application in minikube and PKS. In the file pages-service.yaml value for type would be NodePort and LoadBalancer for minikube and pks respectively.
 
 +
 
 [source,java]
 ---------------------------------------------------------------------
-kubectl apply -f deployment/pages-namespace.yaml
+kubectl config use-context minikube
+
 kubectl apply -f deployment/pages-config.yaml
-kubectl apply -f deployment/pages-service.yaml
 kubectl apply -f deployment/pages-deployment.yaml
+
 ---------------------------------------------------------------------
 
 . Verify the deployment, configMap and service are created by using the following command
@@ -156,9 +172,9 @@ kubectl apply -f deployment/pages-deployment.yaml
 
 [source,java]
 ---------------------------------------------------------------------
-kubectl get deployment pages --namespace pages-<your-name>
-kubectl get cm pages-config-map  --namespace pages-<your-name>
-kubectl get service pages  --namespace pages-<your-name>
+kubectl get deployment pages --namespace <your-name>
+kubectl get cm pages-config-map  --namespace <your-name>
+kubectl get service pages  --namespace <your-name>
 ---------------------------------------------------------------------
 . Identify the url of the pages service from the output above command. Refer to the previous lab for instructions to know the url of the service for both minikube and pks
 . Open the pages url in browser to test the application.
