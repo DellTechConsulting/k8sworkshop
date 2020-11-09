@@ -141,7 +141,7 @@ kubectl config set-context --current --namespace=<your-name>
 ---------------------------------------------------------------------
 git add .
 git commit -m "commit message"
-git push origin kwork:master -f
+git push origin <<new branch>>:master -f
 ---------------------------------------------------------------------
 
 == Accessing the Kubernetes Dashboard on PKS
