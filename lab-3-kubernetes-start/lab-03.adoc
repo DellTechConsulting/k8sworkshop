@@ -28,20 +28,29 @@ In metadata section add namespace: <your-name>
 ---------------------------------------------------------------------
 . Change type in pages-service.yaml to NodePort
 . Build the application and build a docker image
+[source,java]
+---------------------------------------------------------------------
       ./gradlew clean build
       sudo docker build -t pages .
       sudo docker tag pages <docker_username>/<repo-name>:kube 
       sudo docker push <docker_username>/<repo-name>:kube 
+---------------------------------------------------------------------
 
 Instructions for the application to be deployed in minikube for local testing
 
 . minikube and kubectl must be installed in the local machine vm. To start minikube "minikube start" or "minikube start --driver=virtualbox/docker" could be executed in the terminal.
+[source,java]
+---------------------------------------------------------------------
       chmod +x ./kubectl
       sudo mv ./kubectl /usr/local/bin/kubectl
       kubectl version --client
       sudo usermod -aG docker $USER && newgrp docker
+---------------------------------------------------------------------
 . Try starting minikube
+[source,java]
+---------------------------------------------------------------------
       minikube start
+---------------------------------------------------------------------
 
 . Run the following commands in terminal to run the application in minikube
 
