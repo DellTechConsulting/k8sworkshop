@@ -46,6 +46,7 @@ Instructions for the application to be deployed in minikube for local testing
       kubectl version --client
       sudo usermod -aG docker $USER && newgrp docker
 ---------------------------------------------------------------------
++
 . Try starting minikube
 [source,java]
 ---------------------------------------------------------------------
