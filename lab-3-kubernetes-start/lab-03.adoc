@@ -83,8 +83,11 @@ kubectl config set-context --current --namespace=<your-name>
 
 .   Instructions for the application to be deployed in Enterprise AKS
 .. azure cli must have been installed already
-.. Execute the below command to login to the PKS
-   $ az login
+.. Execute the below command to login to the AKS
+[source, java]
+---------------------------------------------------------------------
+    $ az login
+---------------------------------------------------------------------
 
 +
 [source, java, numbered]
