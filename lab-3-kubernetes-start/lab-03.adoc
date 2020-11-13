@@ -58,9 +58,9 @@ Instructions for the application to be deployed in minikube for local testing
 +
 [source,java]
 ---------------------------------------------------------------------
-kubectl -f deployment/pages-namespace.yaml
-kubectl -f deployment/pages-service.yaml
-kubectl -f deployment/pages-deployment.yaml
+kubectl apply -f deployment/pages-namespace.yaml
+kubectl apply -f deployment/pages-service.yaml
+kubectl apply -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------  
 
 . The above commands will create a namespace in the name <your-name> and a deployment, service called pages under the same namespace. Verify the namespace, deployment and service are created by using the following command
@@ -108,9 +108,9 @@ Now we are good to execute our commands in the AKS cluster
 +
 [source, java, numbered]
 ---------------------------------------------------------------------
-kubectl -f deployment/pages-namespace.yaml
-kubectl -f deployment/pages-service.yaml
-kubectl -f deployment/pages-deployment.yaml
+kubectl apply -f deployment/pages-namespace.yaml
+kubectl apply -f deployment/pages-service.yaml
+kubectl apply -f deployment/pages-deployment.yaml
 ---------------------------------------------------------------------
 
 . Verify the namespace, deployment and service are created by using the following command in the aks cluster
