@@ -10,7 +10,7 @@ After completing the lab, you will be able to:
  . Integrate Azure Devops with github.
  . Continuously deploy your code to AKS  
  
-
+---------------------------------------------------------------------------------------------------------
 . Create an Azure AKS cluster with 2 nodes in your azure subscription.
 . Create a new Azure Devops account and a project namaes Pages in it.
 . Create a service connection for your docker registry in Pages project.
